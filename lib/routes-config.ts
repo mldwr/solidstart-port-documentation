@@ -9,6 +9,21 @@ export type EachRoute = {
 
 export const ROUTES: EachRoute[] = [
   {
+    title: "Dashboard App",
+    href: "/dashboard-app",
+    noLink: true,
+    items: [
+      {
+        title: "Port Notes",
+        href: "/port-notes",
+        items: [
+          { title: "Form Handling", href: "/form-handling" },
+          { title: "TS Component", href: "/ts-component" },
+        ],
+      },
+    ],
+  },
+  {
     title: "Getting Started",
     href: "/getting-started",
     noLink: true,
