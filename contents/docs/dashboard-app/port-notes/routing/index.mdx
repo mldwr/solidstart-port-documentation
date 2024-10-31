@@ -1,0 +1,145 @@
+In Next.js and SolidStart, file-based routing serves as the core navigation model, but each framework has its own conventions for defining routes and handling nested structures.
+
+### 1. Overview: Routing in Next.js vs. SolidStart
+
+#### Next.js (App Router)
+- Next.js uses a file-based routing system, where routes are defined inside the `app/` directory.
+- Each folder and file in `app/` automatically creates a corresponding route.
+- Pages are created by placing `page.tsx` files in folders. Nested folders create nested routes.
+- `layout.tsx` files provide persistent layouts that can be shared across multiple routes, and `loading.tsx` files handle loading states.
+
+#### SolidStart
+- SolidStart also employs a file-based routing system, typically in the `src/routes` directory.
+- Each file within `src/routes` corresponds to a route, and nested folders create nested routes.
+- SolidStart leverages the file names directly for routing, with `index.tsx` serving as the default page for a directory.
+
+### 2. Example Comparison
+
+To help illustrate the difference, let’s go through an example. Suppose your Next.js app has the following structure:
+
+#### Next.js Folder Structure
+```
+app/
+├── dashboard/
+│   ├── page.tsx
+│   ├── settings/
+│   │   ├── page.tsx
+│   └── layout.tsx
+├── about/
+│   ├── page.tsx
+│   ├── loading.tsx
+│   └── layout.tsx
+└── page.tsx
+```
+
+**Explanation:**
+- `/dashboard` and `/about` are top-level routes.
+- `dashboard/settings` is a nested route under `/dashboard`.
+- `layout.tsx` provides a layout for its folder and its nested routes.
+- `loading.tsx` specifies a loading screen for the `/about` route.
+
+#### Equivalent SolidStart Folder Structure
+To replicate this in SolidStart:
+
+```
+src/routes/
+├── dashboard/
+│   ├── index.tsx
+│   ├── settings/
+│   │   └── index.tsx
+│   └── layout.tsx
+├── about/
+│   ├── index.tsx
+│   ├── loading.tsx
+│   └── layout.tsx
+└── index.tsx
+```
+
+**Explanation:**
+- In SolidStart, `index.tsx` is used to represent the main page of each route folder.
+- `layout.tsx` works similarly to Next.js by providing a persistent layout for nested routes within its directory.
+- You can create a loading screen for `/about` with `loading.tsx`, similar to Next.js.
+
+### 3. Example Code
+
+Let’s go through the code for each framework, demonstrating the basic components for both a top-level route and a nested route.
+
+#### Next.js - `app/dashboard/layout.tsx`
+```typescript
+// app/dashboard/layout.tsx
+export default function DashboardLayout({ children }) {
+  return (
+    <div>
+      <h1>Dashboard Layout</h1>
+      {children}
+    </div>
+  );
+}
+```
+
+#### SolidStart - `src/routes/dashboard/layout.tsx`
+```typescript
+// src/routes/dashboard/layout.tsx
+import { Outlet } from 'solid-start';
+
+export default function DashboardLayout() {
+  return (
+    <div>
+      <h1>Dashboard Layout</h1>
+      <Outlet />
+    </div>
+  );
+}
+```
+
+### 4. Nested Route Example
+
+For nested routes, here’s how you would define the `dashboard/settings` page in each framework:
+
+#### Next.js - `app/dashboard/settings/page.tsx`
+```typescript
+// app/dashboard/settings/page.tsx
+export default function SettingsPage() {
+  return <div>Settings Page</div>;
+}
+```
+
+#### SolidStart - `src/routes/dashboard/settings/index.tsx`
+```typescript
+// src/routes/dashboard/settings/index.tsx
+export default function SettingsPage() {
+  return <div>Settings Page</div>;
+}
+```
+
+### 5. Handling Dynamic Routes
+
+Dynamic routes are handled similarly but with syntax differences:
+- **Next.js**: Create `[id].tsx` for dynamic routes.
+- **SolidStart**: Use `[param].tsx` in `src/routes` for dynamic routes.
+
+#### Next.js - Dynamic Route Example
+```typescript
+// app/dashboard/[id]/page.tsx
+export default function DashboardItem({ params }) {
+  return <div>Item ID: {params.id}</div>;
+}
+```
+
+#### SolidStart - Dynamic Route Example
+```typescript
+// src/routes/dashboard/[id].tsx
+import { useParams } from 'solid-start';
+
+export default function DashboardItem() {
+  const params = useParams();
+  return <div>Item ID: {params.id}</div>;
+}
+```
+
+### Key Differences in Porting
+1. **Folders and Filenames**: Replace `page.tsx` in Next.js with `index.tsx` in SolidStart.
+2. **`layout.tsx` Usage**: Use `layout.tsx` similarly in both frameworks, with SolidStart's `Outlet` replacing Next.js’s `{ children }`.
+3. **Loading Screens**: Rename `loading.tsx` files as needed and maintain them within the same route structure.
+
+Using these examples, you can start translating your Next.js routing structure to SolidStart with minimal effort.

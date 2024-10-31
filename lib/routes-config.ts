@@ -19,6 +19,7 @@ export const ROUTES: EachRoute[] = [
         items: [
           { title: "Form Handling", href: "/form-handling" },
           { title: "TS Component", href: "/ts-component" },
+          { title: "Routing", href: "/routing" },
         ],
       },
     ],
