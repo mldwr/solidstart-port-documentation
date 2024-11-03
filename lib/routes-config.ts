@@ -20,6 +20,7 @@ export const ROUTES: EachRoute[] = [
           { title: "Form Handling", href: "/form-handling" },
           { title: "TS Component", href: "/ts-component" },
           { title: "Routing", href: "/routing" },
+          { title: "useResource vs async/await", href: "/useResource-vs-await" },
         ],
       },
     ],

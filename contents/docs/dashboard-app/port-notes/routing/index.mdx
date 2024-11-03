@@ -1,5 +1,7 @@
 In Next.js and SolidStart, file-based routing serves as the core navigation model, but each framework has its own conventions for defining routes and handling nested structures.
 
+## Routing
+
 ### 1. Overview: Routing in Next.js vs. SolidStart
 
 #### Next.js (App Router)
@@ -143,3 +145,77 @@ export default function DashboardItem() {
 3. **Loading Screens**: Rename `loading.tsx` files as needed and maintain them within the same route structure.
 
 Using these examples, you can start translating your Next.js routing structure to SolidStart with minimal effort.
+
+## Default routing
+In Next.js, route groups like `(overview)` allow you to organize routes and designate default or grouped routes. To replicate this in SolidStart, you can use SolidStart’s default route mechanism with `index.tsx`, but there are some differences in structure, as SolidStart doesn’t use route groups in the same way.
+
+Here's how you can port your Next.js route structure to SolidStart.
+
+### 1. Next.js Structure
+Your Next.js folder structure looks like this:
+```
+app/
+└── dashboard/
+    ├── (overview)/
+    │   └── page.tsx        // Default overview route for /dashboard
+    ├── invoices/
+    │   └── page.tsx        // Route for /dashboard/invoices
+    └── customers/
+        └── page.tsx        // Route for /dashboard/customers
+```
+
+- In this structure, `(overview)` acts as the default route when you navigate to `/dashboard`.
+  
+### 2. Porting to SolidStart
+In SolidStart, you can achieve a similar structure by using `index.tsx` as the default page within `src/routes/dashboard/`. Here’s what the equivalent folder structure would look like in SolidStart:
+
+```
+src/
+└── routes/
+    └── dashboard/
+        ├── index.tsx        // Default overview route for /dashboard
+        ├── invoices/
+        │   └── index.tsx    // Route for /dashboard/invoices
+        └── customers/
+            └── index.tsx    // Route for /dashboard/customers
+```
+
+### Explanation
+1. **`index.tsx`**: In SolidStart, `index.tsx` within the `dashboard` folder acts as the default route for `/dashboard`, replacing `(overview)` in Next.js.
+2. **Nested Routes**: For each sub-route like `/dashboard/invoices` and `/dashboard/customers`, create their own folders with `index.tsx` inside. 
+
+### Code Examples
+
+#### SolidStart - `src/routes/dashboard/index.tsx`
+This file corresponds to the default "overview" route (`/dashboard`) in SolidStart:
+
+```javascript
+export default function DashboardOverview() {
+  return <div>Overview of the Dashboard</div>;
+}
+```
+
+#### SolidStart - `src/routes/dashboard/invoices/index.tsx`
+This file corresponds to `/dashboard/invoices`:
+
+```javascript
+export default function Invoices() {
+  return <div>Invoices Page</div>;
+}
+```
+
+#### SolidStart - `src/routes/dashboard/customers/index.tsx`
+This file corresponds to `/dashboard/customers`:
+
+```javascript
+export default function Customers() {
+  return <div>Customers Page</div>;
+}
+```
+
+### Summary
+In SolidStart:
+- Use `index.tsx` within `dashboard` to act as the default route (`/dashboard`), similar to Next.js’s `(overview)`.
+- For nested routes, create folders for each route (like `invoices` and `customers`), and place `index.tsx` inside to handle routes like `/dashboard/invoices` and `/dashboard/customers`.
+
+This approach provides the same user experience in SolidStart without the need for route groups.
